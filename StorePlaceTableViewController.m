@@ -51,12 +51,13 @@
 
     GoogleMapAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     self.fetchedData = (NSMutableArray*)[appDelegate getAllPlaceRecords];
+    if(self.fetchedData.count != 0){
     MapDetail * record = [self.fetchedData objectAtIndex:self.cellSelect.row];
     _placeData=(NSDictionary*)record.mapData;
     _placeData=NULL;
     //[self.myTableView reloadData];
     [self.tableView reloadData];
-    // You code here to update the view.
+    }
     
 }
 

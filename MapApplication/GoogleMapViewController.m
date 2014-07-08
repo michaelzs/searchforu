@@ -8,8 +8,6 @@
 
 #import "GoogleMapViewController.h"
 #import "SearchResultViewController.h"
-
-#define GOOGLE_API_KEY @"AIzaSyCK1_Ql-PHZr7aAndrSdt32RtsFvzv4nG4"
 @interface GoogleMapViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *mainButton;
 
@@ -100,8 +98,6 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Reminder" message: @"You may dismiss name, type or range! The Result is not accurate!" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil]; [alert show];
     }
 }
-
-
 
 #pragma mark - TextField Return
 /*

@@ -10,7 +10,6 @@
 #import <COMSMapManager/COMSMapManager.h>
 #import "ResultTableViewController.h"
 @import CoreLocation;
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 #define GOOGLE_API_KEY @"AIzaSyCK1_Ql-PHZr7aAndrSdt32RtsFvzv4nG4"
 
 @interface SearchResultViewController ()
@@ -33,7 +32,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.mapResult.delegate=self;
-    [self queryGooglePlaces];
     dataSource=[[NSMutableArray alloc] init];
     _locationManager = [[CLLocationManager alloc] init];
     _data=[[NSDictionary alloc] init];
@@ -42,8 +40,6 @@
     _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
     [_locationManager startUpdatingLocation];
-    
-    
     
    
     
@@ -75,7 +71,6 @@
     [self changeValue];
     //Show the annotation of the search result
     [self showAnnotation];
-    
     
 }
 #pragma mark - Get Data
@@ -125,38 +120,6 @@
         completion();
     }];
     
-}
-
-
--(void) queryGooglePlaces {
-    // Build the url string to send to Google. NOTE: The kGOOGLE_API_KEY is a constant that should contain your own API key that you obtain from Google. See this link for more info:
-    // https://developers.google.com/maps/documentation/places/#Authentication
-    NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=%@&types=%@&sensor=true&key=%@", self.currentLocation.latitude, self.currentLocation.longitude, [NSString stringWithFormat:@"%i", 5000], self.searchType, GOOGLE_API_KEY];
-    
-    //Formulate the string as a URL object.
-    NSURL *googleRequestURL=[NSURL URLWithString:url];
-    
-    // Retrieve the results of the URL.
-    dispatch_async(kBgQueue, ^{
-        NSData* data = [NSData dataWithContentsOfURL: googleRequestURL];
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
-    });
-}
-
--(void)fetchedData:(NSData *)responseData {
-    //parse out the json data
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:responseData
-                          
-                          options:kNilOptions
-                          error:&error];
-    
-    //The results from Google will be an array obtained from the NSDictionary object with the key "results".
-    NSArray* places = [json objectForKey:@"results"];
-    
-    //Write out the data to the console.
-    NSLog(@"Google Data: %@", json);
 }
 
 #pragma mark - Show Annotation

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface GoogleMapViewController : UIViewController<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getSearchQuery;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
@@ -18,5 +17,4 @@
 @property (copy, nonatomic) NSString *queryName;
 @property (copy, nonatomic) NSString *queryType;
 @property (copy, nonatomic) NSString *queryRadius;
-
 @end
